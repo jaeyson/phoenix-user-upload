@@ -11,7 +11,6 @@ defmodule Poetic.Repo.Migrations.CreateUploads do
       timestamps()
     end
 
-    create index(:uploads, [ :hash ])
-
+    create index(:uploads, [:hash])
   end
 end

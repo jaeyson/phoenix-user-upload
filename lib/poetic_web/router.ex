@@ -16,7 +16,8 @@ defmodule PoeticWeb.Router do
   scope "/", PoeticWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    # get "/", PageController, :index
+    resources "uploads", UploadController, only: [:index, :new, :create, :show]
   end
 
   # Other scopes may use custom stacks.
