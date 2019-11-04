@@ -26,8 +26,13 @@ defmodule Poetic.Documents do
 
            :ok <- File.cp(tmp_path, Upload.local_path(upload.id, filename))
       do upload
-      else {:error, reason} = Repo.rollback(reason)
+      else {:error, reason} -> Repo.rollback(reason)
       end
     end
   end
+
+  def list_uploads do
+    Repo.all(Upload)
+  end
+
 end
