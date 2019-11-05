@@ -35,4 +35,8 @@ defmodule Poetic.Documents do
     Repo.all(Upload)
   end
 
+  def get_upload!(id) do
+    Upload |> Repo.get!(id)
+  end
+
 end

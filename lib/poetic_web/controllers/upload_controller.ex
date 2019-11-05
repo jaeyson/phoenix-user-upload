@@ -2,6 +2,7 @@ defmodule PoeticWeb.UploadController do
   use PoeticWeb, :controller
 
   alias Poetic.Documents
+  alias Poetic.Documents.Upload
 
   def new(conn, _params) do
     render(conn, "new.html")
@@ -22,6 +23,12 @@ defmodule PoeticWeb.UploadController do
   def index(conn, _params) do
     uploads = Documents.list_uploads()
     render(conn, "index.html", uploads: uploads)
+  end
+
+  def show(conn, %{"id" => id}) do
+    upload = Documents.get_upload!(id)
+    local_path = Upload.local_path(upload.id, upload.filename)
+    send_download conn, {:file, local_path}, filename: upload.filename
   end
 
 end
