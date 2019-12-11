@@ -20,7 +20,9 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Source: https://github.com/phoenixframework/phoenix
 
 [//]: # (Reference-style link definitions here)
-[Poetic coding][source-link]
+[Poetic coding 1][source-link 1]
+[Poetic coding 2][source-link 2]
 
-[source-link]: https://www.poeticoding.com/newsletter-subscription-confirmed/
+[source-link 1]: https://www.poeticoding.com/newsletter-subscription-confirmed/
+[source-link 2]: https://www.poeticoding.com/creating-thumbnails-of-uploaded-images-and-pdf-in-phoenix/
 
