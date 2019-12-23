@@ -44,13 +44,22 @@ defmodule Poetic.Documents.Upload do
     |> Path.join()
   end
 
-  def creat_thumbnail(%__MODULE__{ content_type: "image/" <> _img_type } = upload) do
+  def create_thumbnail(%__MODULE__{content_type: "image/" <> _img_type} = upload) do
     original_path = local_path(upload.id, upload.filename)
     thumb_path = thumbnail_path(upload.id)
-    { :ok, _ } = mogrify_thumbnail(original_path, thumb_path)
+    {:ok, _} = mogrify_thumbnail(original_path, thumb_path)
 
-    changeset(upload, %{ thumbnail?: true })
+    changeset(upload, %{thumbnail?: true})
   end
+
+  def create_thumbnail(%__MODULE__{content_type: "application/pdf"} = upload) do
+    original_path = local_path(upload.id, upload.filename)
+    thumb_path = thumbnail_path(upload.id)
+    {:ok, _} = mogrify_thumbnail(original_path, thumb_path)
+    changeset(upload, %{thumbnail?: true})
+  end
+
+  def create_thumbnail(%__MODULE__{} = upload), do: changeset(upload, %{})
 
   def mogrify_thumbnail(src_path, dest_path) do
     try do
@@ -62,6 +71,15 @@ defmodule Poetic.Documents.Upload do
       error -> {:error, error}
     else
       _image -> {:ok, dest_path}
+    end
+  end
+
+  def pdf_thumbnail(pdf_path, thumb_path) do
+    args = ["-density", "300", "-resize", "300x300", "#{pdf_path}[0]", thumb_path]
+
+    case System.cmd("convert", args, stderr_to_stdout: true) do
+      {_, 0} -> {:ok, thumb_path}
+      {reason, _} -> {:error, reason}
     end
   end
 end

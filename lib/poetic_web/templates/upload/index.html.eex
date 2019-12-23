@@ -9,6 +9,13 @@
   <tbody>
     <%= for upload <- @uploads do %>
       <tr>
+        <td>
+          <%= if upload.thumbnail? do
+            img_tag Routes.upload_thumbnail_path(@conn, :thumbnail, upload.id)
+else
+            img_tag "/images/generic_thumbnail.jpg"
+          end %>
+        </td>
         <td><%= upload.id %></td>
         <td><%= upload.filename %></td>
         <td><%= upload.content_type %></td>

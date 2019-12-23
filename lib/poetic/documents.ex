@@ -26,7 +26,8 @@ defmodule Poetic.Documents do
                size: size
              })
              |> Repo.insert(),
-           :ok <- File.cp(tmp_path, Upload.local_path(upload.id, filename)) do
+           :ok <- File.cp(tmp_path, Upload.local_path(upload.id, filename)),
+           {:ok, upload} <- Upload.create_thumbnail(upload) |> Repo.update() do
         upload
       else
         {:error, reason} -> Repo.rollback(reason)
