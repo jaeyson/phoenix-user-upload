@@ -15,7 +15,7 @@ defmodule PoeticWeb.UploadController do
         redirect(conn, to: Routes.upload_path(conn, :index))
 
       {:error, reason} ->
-        put_flash(conn, :error, "error upload file: #{inspect reason}")
+        put_flash(conn, :error, "error upload file: #{inspect(reason)}")
         render(conn, "new.html")
     end
   end
@@ -28,7 +28,6 @@ defmodule PoeticWeb.UploadController do
   def show(conn, %{"id" => id}) do
     upload = Documents.get_upload!(id)
     local_path = Upload.local_path(upload.id, upload.filename)
-    send_download conn, {:file, local_path}, filename: upload.filename
+    send_download(conn, {:file, local_path}, filename: upload.filename)
   end
-
 end
